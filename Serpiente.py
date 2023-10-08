@@ -44,13 +44,17 @@ texto.write('Puntuacion: 0    Record: 0', align = 'center', font = ('Courier', 1
 
 #Funciones
 def arriba():
-    cabeza.direction = 'up'
+    if cabeza.direction != 'down':
+        cabeza.direction = 'up'
 def abajo():
-    cabeza.direction = 'down'
+    if cabeza.direction != 'up':
+        cabeza.direction = 'down'
 def izquierda():
-    cabeza.direction = 'left'
+    if cabeza.direction != 'right':
+        cabeza.direction = 'left'
 def derecha():
-    cabeza.direction = 'right'
+    if cabeza.direction != 'left':
+        cabeza.direction = 'right'
 
 def mov():
     if cabeza.direction == 'up':
@@ -94,7 +98,7 @@ while True:
         texto.write('Puntuacion: {}    Record: {}'.format(marcador, record), align = 'center', font = ('Courier', 18, 'bold'))        
 
     #Colision bordes
-    if cabeza.xcor() > 240 or cabeza.xcor() < -240 or cabeza.ycor() > 240 or cabeza.ycor() < -240:
+    if cabeza.xcor() > 230 or cabeza.xcor() < -230 or cabeza.ycor() > 230 or cabeza.ycor() < -230:
         time.sleep(1)
         cabeza.goto(0, 0)
         cabeza.direction = 'stop'       
@@ -106,6 +110,17 @@ while True:
         marcador = 0
         texto.clear()    
         texto.write('Puntuacion: {}    Record: {}'.format(marcador, record), align = 'center', font = ('Courier', 18, 'bold')) 
+        
+    #Colisones con el cuerpo
+    for i in segmentos:
+        if i.distance(cabeza) < 20:
+            time.sleep(1)
+            cabeza.goto(0, 0)
+            cabeza.direction = 'stop'
+            
+            for i in segmentos:
+                i.goto(1000, 1000)
+            segmentos.clear()
                 
     #mover segmento
     totalSegmentos = len(segmentos)
@@ -120,16 +135,4 @@ while True:
         segmentos[0].goto(x, y)
         
     mov()
-    
-    #Colisones con el cuerpo
-    for i in segmentos:
-        if i.distance(cabeza) < 20:
-            time.sleep(1)
-            cabeza.goto(0, 0)
-            cabeza.direction = 'stop'
-            
-            for i in segmentos:
-                i.goto(1000, 1000)
-        segmentos.clear()
-    
     time.sleep(posponer)
