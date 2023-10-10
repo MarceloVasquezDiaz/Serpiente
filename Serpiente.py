@@ -57,18 +57,19 @@ def derecha():
         cabeza.direction = 'right'
 
 def mov():
-    if cabeza.direction == 'up':
-        y = cabeza.ycor()
-        cabeza.sety(y + 20)
-    elif cabeza.direction == 'down':
-        y = cabeza.ycor()
-        cabeza.sety(y - 20)
-    elif cabeza.direction == 'left':
-        x = cabeza.xcor()
-        cabeza.setx(x - 20)
-    elif cabeza.direction == 'right':
-        x = cabeza.xcor()
-        cabeza.setx(x + 20)   
+    match cabeza.direction:
+        case 'up':
+            y = cabeza.ycor()
+            cabeza.sety(y + 20)
+        case 'down':
+            y = cabeza.ycor()
+            cabeza.sety(y - 20)
+        case 'left':
+            x = cabeza.xcor()
+            cabeza.setx(x - 20)
+        case 'right':
+            x = cabeza.xcor()
+            cabeza.setx(x + 20) 
         
 #Teclado
 window.listen()
